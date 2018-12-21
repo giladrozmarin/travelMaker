@@ -5,12 +5,10 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.Spinner;
 import android.widget.Toast;
 import com.example.travelmaker.travelmaker.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -29,7 +27,6 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private Intent HomeActivity;
     private ImageView loginphoto;
-    public String type;
 
 
 
@@ -42,7 +39,6 @@ public class LoginActivity extends AppCompatActivity {
         userPassword = findViewById(R.id.login_password);
         btnLogin = findViewById(R.id.loginBtn);
         loginProgress = findViewById(R.id.login_progress);
-//        type = findViewById(R.id.spinner.);
         mAuth = FirebaseAuth.getInstance();
         HomeActivity = new Intent(this,com.example.travelmaker.travelmaker.Activities.HomeActivity.class);
         loginphoto = findViewById(R.id.login_photo);
@@ -79,13 +75,6 @@ public class LoginActivity extends AppCompatActivity {
 
             }
         });
-        Spinner spinner = (Spinner) findViewById(R.id.spinner);
-        // Create an ArrayAdapter using the string array and a default spinner layout
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.signup_type, android.R.layout.simple_spinner_item);
-        // Specify the layout to use when the list of choices appears
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        // Apply the adapter to the spinner
-        spinner.setAdapter(adapter);
 
 
     }
