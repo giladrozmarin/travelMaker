@@ -60,6 +60,7 @@ public class RegisterActivity extends AppCompatActivity {
                 final String email = userEmail.getText().toString();
                 final String password = userPassword.getText().toString();
                 final String password2 = userPassword2.getText().toString();
+                final String type = "TYPE_STRING";
                 //something goes worng : all fields must be filled
                 // we need to display an error message
 
@@ -77,7 +78,7 @@ public class RegisterActivity extends AppCompatActivity {
                     //everything is ok
                     //create user account
 
-                    CreateUserAccount(email,name,password);
+                    CreateUserAccount(email,name,password, type);
                 }
 
             }
@@ -89,7 +90,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     }
 
-    private void CreateUserAccount(final String email, final String name, final String password) {
+    private void CreateUserAccount(final String email, final String name, final String password, final String type) {
 
         // this method create user account
         mAuth.createUserWithEmailAndPassword(email,password)
@@ -102,7 +103,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                             showMassge("Account created");
                             // after we created user account we need to update his info
-                            User user = new User (name,email,password,password);
+                            User user = new User (name,email,password,type);
                             FirebaseDatabase.getInstance().getReference("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(user);
 
                              updateUserInfo(name,mAuth.getCurrentUser());

@@ -5,7 +5,7 @@ import java.util.Date;
 
 public class User {
 
-	public String userName,email,password,password2;
+	public String userName,email,password,password2, type;
 
 	//protected Date birthDay;
 
@@ -14,6 +14,7 @@ public class User {
 		this.email = email;
 		this.password = password;
 		this.password2 = password2;
+		this.type = type;
 	//	this.birthDay = birthDay;
 	}
 }

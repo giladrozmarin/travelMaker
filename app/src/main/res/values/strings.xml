@@ -1,4 +1,10 @@
 <resources>
     <string name="app_name">travelMaker</string>
     <string name="title_activity_home">HomeActivity</string>
+    <string name="email">Mail Address</string>
+    <string name="signup_prompt">Sign up</string>
+    <string-array name="signup_type">
+        <item>Traveler</item>
+        <item>Traveler Guide</item>
+    </string-array>
 </resources>
