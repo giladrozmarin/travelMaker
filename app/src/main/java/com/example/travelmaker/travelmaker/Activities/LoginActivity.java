@@ -5,12 +5,17 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.Toast;
+
+import com.example.travelmaker.travelmaker.Models.TravelGuide;
 import com.example.travelmaker.travelmaker.R;
+import com.google.android.gms.common.oob.SignUp;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -26,8 +31,7 @@ public class LoginActivity extends AppCompatActivity {
     private ProgressBar loginProgress;
     private FirebaseAuth mAuth;
     private Intent HomeActivity;
-    private ImageView loginphoto;
-
+    private Button signUp;
 
 
     @Override
@@ -41,8 +45,8 @@ public class LoginActivity extends AppCompatActivity {
         loginProgress = findViewById(R.id.login_progress);
         mAuth = FirebaseAuth.getInstance();
         HomeActivity = new Intent(this,com.example.travelmaker.travelmaker.Activities.HomeActivity.class);
-        loginphoto = findViewById(R.id.login_photo);
-        loginphoto.setOnClickListener(new View.OnClickListener() {
+        signUp = findViewById(R.id.sign_up);
+        signUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent registerActivity = new Intent(getApplicationContext(),RegisterActivity.class);
