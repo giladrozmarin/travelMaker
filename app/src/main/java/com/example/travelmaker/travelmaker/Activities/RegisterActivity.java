@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.example.travelmaker.travelmaker.Models.User;
 import com.example.travelmaker.travelmaker.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -18,8 +19,11 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.database.FirebaseDatabase;
+
 
 public class RegisterActivity extends AppCompatActivity {
+
 
     private EditText userName, userEmail, userPassword, userPassword2;
     private ProgressBar loadingProgress;
@@ -43,7 +47,7 @@ public class RegisterActivity extends AppCompatActivity {
         regBtn = findViewById(R.id.regBtn);
         loadingProgress.setVisibility(View.INVISIBLE);
 
-        mAuth = FirebaseAuth.getInstance();
+            mAuth = FirebaseAuth.getInstance();
 
 
         regBtn.setOnClickListener(new View.OnClickListener() {
@@ -85,7 +89,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     }
 
-    private void CreateUserAccount(String email, final String name, String password) {
+    private void CreateUserAccount(final String email, final String name, final String password) {
 
         // this method create user account
         mAuth.createUserWithEmailAndPassword(email,password)
@@ -98,7 +102,11 @@ public class RegisterActivity extends AppCompatActivity {
 
                             showMassge("Account created");
                             // after we created user account we need to update his info
+                            User user = new User (name,email,password,password);
+                            FirebaseDatabase.getInstance().getReference("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(user);
+
                              updateUserInfo(name,mAuth.getCurrentUser());
+
 
 
                         }

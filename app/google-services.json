@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "185808404726-thl1au62tdch0p8r09e9340vlhba7lpf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.travelmaker.travelmaker",
+            "certificate_hash": "83197ff112cac546020290d77b4eaa5d10b821a6"
+          }
+        },
+        {
           "client_id": "185808404726-flgn5evf72mrttdghkcn37p44mcnc4uu.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -29,8 +37,13 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "185808404726-flgn5evf72mrttdghkcn37p44mcnc4uu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
           "status": 2
