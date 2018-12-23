@@ -24,6 +24,9 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -42,12 +45,15 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-/*
+        addItemsOnSpinner();
+        addListenerOnSpinnerItemSelection();
+
+        /*
         //inu views
         sp = (findViewById(R.id.spinner));
         adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,names);
         sp.setAdapter(adapter);
-*/
+        */
         userName = findViewById(R.id.regName);
         userEmail = findViewById(R.id.regMail);
         userPassword = findViewById(R.id.regPassword);
@@ -56,7 +62,7 @@ public class RegisterActivity extends AppCompatActivity {
         regBtn = findViewById(R.id.regBtn);
         loadingProgress.setVisibility(View.INVISIBLE);
 
-            mAuth = FirebaseAuth.getInstance();
+        mAuth = FirebaseAuth.getInstance();
 /*
             sp.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
@@ -83,11 +89,13 @@ public class RegisterActivity extends AppCompatActivity {
 
                 regBtn.setVisibility((View.INVISIBLE));
                 loadingProgress.setVisibility(View.VISIBLE);
+                sp = (Spinner) findViewById(R.id.spinner);
                 final String name = userName.getText().toString();
                 final String email = userEmail.getText().toString();
                 final String password = userPassword.getText().toString();
                 final String password2 = userPassword2.getText().toString();
-                final String type = type1;
+                final String type = String.valueOf(sp.getSelectedItem());
+                Toast.makeText(RegisterActivity.this, "Type: " + type, Toast.LENGTH_LONG).show();
                 //something goes worng : all fields must be filled
                 // we need to display an error message
 
@@ -100,7 +108,7 @@ public class RegisterActivity extends AppCompatActivity {
 
 
                 }
-                 else {
+                else {
 
                     //everything is ok
                     //create user account
@@ -112,7 +120,7 @@ public class RegisterActivity extends AppCompatActivity {
         });
 
 
- 
+
 
 
     }
@@ -126,14 +134,15 @@ public class RegisterActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful())
                         {
-                          //user account create successfully
+                            //user account create successfully
 
                             showMassge("Account created");
                             // after we created user account we need to update his info
                             User user = new User (name,email,password,type);
                             FirebaseDatabase.getInstance().getReference("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(user);
+                            FirebaseDatabase.getInstance().getReference("Users").child(user.type).child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(user);
 
-                             updateUserInfo(name,mAuth.getCurrentUser());
+                            updateUserInfo(name,mAuth.getCurrentUser());
 
 
 
@@ -185,7 +194,7 @@ public class RegisterActivity extends AppCompatActivity {
 
 
 
-   private void updateUI(){
+    private void updateUI(){
 
         Intent homeActivity = new Intent(getApplicationContext(), HomeActivity.class);
         startActivity(homeActivity);
@@ -196,5 +205,33 @@ public class RegisterActivity extends AppCompatActivity {
         Toast.makeText(getApplicationContext(),message, Toast.LENGTH_LONG).show();
     }
 
+    public void addItemsOnSpinner() {
 
+        sp = (Spinner) findViewById(R.id.spinner);
+        List<String> list = new ArrayList<String>();
+        list.add("Traveler");
+        list.add("TravelGuide");
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, list);
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        sp.setAdapter(dataAdapter);
+    }
+
+    public void addListenerOnSpinnerItemSelection() {
+        sp = (Spinner) findViewById(R.id.spinner);
+        sp.setOnItemSelectedListener(new CustomOnItemSelectedListener());
+    }
+
+    private class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedListener {
+        public void onItemSelected(AdapterView<?> parent, View view, int pos,long id) {
+            Toast.makeText(parent.getContext(),
+                    "OnItemSelectedListener : " + parent.getItemAtPosition(pos).toString(),
+                    Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> arg0) {
+            // TODO Auto-generated method stub
+        }
+    }
 }
