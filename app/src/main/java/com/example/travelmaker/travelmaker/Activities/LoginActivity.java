@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -51,7 +52,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent registerActivity = new Intent(getApplicationContext(),RegisterActivity.class);
                 startActivity(registerActivity);
-                finish();;
+//                finish();;
             }
         });
         loginProgress.setVisibility(View.INVISIBLE);
@@ -69,17 +70,12 @@ public class LoginActivity extends AppCompatActivity {
                     btnLogin.setVisibility(View.VISIBLE);
                     loginProgress.setVisibility(View.INVISIBLE);
                 }
-                else
-                {
+                else {
                     signIn(mail,password);
                 }
-
-
-
-
             }
         });
-
+        //DB read test
 
     }
 
@@ -139,4 +135,12 @@ public class LoginActivity extends AppCompatActivity {
 
 
     }
+
+    /** Called when the activity has become visible. */
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d("OnResume", "The onResume() event");
+    }
+
 }

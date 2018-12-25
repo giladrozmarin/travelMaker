@@ -9,6 +9,8 @@
     <string name="password">Password</string>
     <string name="mail">Mail</string>
     <string name="name">Name</string>
+    <string name="your_trips">Your Trips</string>
+    <string name="available_trips">Available Trips</string>
     <string-array name="signup_type">
         <item>Traveler</item>
         <item>Traveler Guide</item>

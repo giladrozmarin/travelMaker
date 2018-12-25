@@ -143,9 +143,8 @@ public class RegisterActivity extends AppCompatActivity {
                             FirebaseDatabase.getInstance().getReference("Users").child(user.type).child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(user);
 
                             updateUserInfo(name,mAuth.getCurrentUser());
-
-
-
+                            finish();
+                            return;
                         }
 
                         else {
