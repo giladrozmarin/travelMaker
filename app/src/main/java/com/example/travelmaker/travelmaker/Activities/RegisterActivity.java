@@ -95,7 +95,7 @@ public class RegisterActivity extends AppCompatActivity {
                 final String password = userPassword.getText().toString();
                 final String password2 = userPassword2.getText().toString();
                 final String type = String.valueOf(sp.getSelectedItem());
-                Toast.makeText(RegisterActivity.this, "Type: " + type, Toast.LENGTH_LONG).show();
+//                Toast.makeText(RegisterActivity.this, "Type: " + type, Toast.LENGTH_LONG).show();
                 //something goes worng : all fields must be filled
                 // we need to display an error message
 
@@ -139,7 +139,7 @@ public class RegisterActivity extends AppCompatActivity {
                             showMassge("Account created");
                             // after we created user account we need to update his info
                             User user = new User (name,email,password,type);
-                            FirebaseDatabase.getInstance().getReference("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(user);
+//                            FirebaseDatabase.getInstance().getReference("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(user);
                             FirebaseDatabase.getInstance().getReference("Users").child(user.type).child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(user);
 
                             updateUserInfo(name,mAuth.getCurrentUser());

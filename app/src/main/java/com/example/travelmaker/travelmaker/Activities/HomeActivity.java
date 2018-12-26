@@ -1,8 +1,10 @@
 package com.example.travelmaker.travelmaker.Activities;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.example.travelmaker.travelmaker.Models.Trip;
 import com.example.travelmaker.travelmaker.R;
@@ -19,7 +21,16 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home2);
-//        if(this.)
+        // if(this.)
+
+
+        // get user email from LoginActivity.java to use for extraction of user type
+        Bundle extra = getIntent().getExtras();
+        if (extra != null) {
+            String user_email = extra.getString(Intent.EXTRA_TEXT);
+            Toast.makeText(getApplicationContext(), "User eMail: " + user_email, Toast.LENGTH_LONG).show();
+        }
+
 
         tripDB = FirebaseDatabase.getInstance().getReference("/Trips");
         // My top posts by number of stars

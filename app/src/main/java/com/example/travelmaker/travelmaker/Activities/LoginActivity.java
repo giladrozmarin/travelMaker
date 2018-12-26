@@ -80,7 +80,7 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    private void signIn(String mail, String password) {
+    private void signIn(final String mail, String password) {
 
 
         mAuth.signInWithEmailAndPassword(mail,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -90,6 +90,9 @@ public class LoginActivity extends AppCompatActivity {
 
                 if (task.isSuccessful()) {
 
+                    HomeActivity.setAction(Intent.ACTION_SEND);
+                    HomeActivity.setType("text/plain");
+                    HomeActivity.putExtra(Intent.EXTRA_TEXT, mail);
                     loginProgress.setVisibility(View.INVISIBLE);
                     btnLogin.setVisibility(View.VISIBLE);
                     updateUI();
