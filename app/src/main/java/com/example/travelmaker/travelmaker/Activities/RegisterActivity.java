@@ -1,9 +1,9 @@
 package com.example.travelmaker.travelmaker.Activities;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -11,7 +11,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
 import android.widget.Toast;
 
 import com.example.travelmaker.travelmaker.Models.User;
@@ -30,15 +29,14 @@ import java.util.List;
 
 public class RegisterActivity extends AppCompatActivity {
 
-
+//na
     private EditText userName, userEmail, userPassword, userPassword2;
     private ProgressBar loadingProgress;
     private Button regBtn;
     private FirebaseAuth mAuth;
-    private String type1;
+
     private Spinner sp;
-    String names [] = {"Traveler","TravelGuide"};
-    ArrayAdapter<String> adapter;
+
 
 
     @Override
@@ -48,12 +46,7 @@ public class RegisterActivity extends AppCompatActivity {
         addItemsOnSpinner();
         addListenerOnSpinnerItemSelection();
 
-        /*
-        //inu views
-        sp = (findViewById(R.id.spinner));
-        adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,names);
-        sp.setAdapter(adapter);
-        */
+
         userName = findViewById(R.id.regName);
         userEmail = findViewById(R.id.regMail);
         userPassword = findViewById(R.id.regPassword);
@@ -63,24 +56,7 @@ public class RegisterActivity extends AppCompatActivity {
         loadingProgress.setVisibility(View.INVISIBLE);
 
         mAuth = FirebaseAuth.getInstance();
-/*
-            sp.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-                    switch (i)
-                    {
-                        case 0:
-                            type1 = "Traveler";
-                            break;
-
-                        case 1:
-                            type1 = "TravelGuide";
-                            break;
-                    }
-                }
-            });
-*/
         regBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -95,7 +71,7 @@ public class RegisterActivity extends AppCompatActivity {
                 final String password = userPassword.getText().toString();
                 final String password2 = userPassword2.getText().toString();
                 final String type = String.valueOf(sp.getSelectedItem());
-//                Toast.makeText(RegisterActivity.this, "Type: " + type, Toast.LENGTH_LONG).show();
+
                 //something goes worng : all fields must be filled
                 // we need to display an error message
 
@@ -139,7 +115,7 @@ public class RegisterActivity extends AppCompatActivity {
                             showMassge("Account created");
                             // after we created user account we need to update his info
                             User user = new User (name,email,password,type);
-//                            FirebaseDatabase.getInstance().getReference("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(user);
+
                             FirebaseDatabase.getInstance().getReference("Users").child(user.type).child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(user);
 
                             updateUserInfo(name,mAuth.getCurrentUser());
@@ -163,9 +139,9 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
 
-    private void updateUserInfo(String name, FirebaseUser currentUser) {
+    private void updateUserInfo(final String name, FirebaseUser currentUser) {
 
-        UserProfileChangeRequest profileupdate = new UserProfileChangeRequest.Builder()
+        final UserProfileChangeRequest profileupdate = new UserProfileChangeRequest.Builder()
                 .setDisplayName(name)
                 .build();
         updateUI();
@@ -177,9 +153,9 @@ public class RegisterActivity extends AppCompatActivity {
 
                         if (task.isSuccessful()){
 
-                            //user info update successfully
-
                             showMassge("Register Complete");
+
+                          //  showMassge("Register Complete");
 
 
                         }
@@ -225,7 +201,7 @@ public class RegisterActivity extends AppCompatActivity {
         public void onItemSelected(AdapterView<?> parent, View view, int pos,long id) {
             Toast.makeText(parent.getContext(),
                     "OnItemSelectedListener : " + parent.getItemAtPosition(pos).toString(),
-                    Toast.LENGTH_SHORT).show();
+                    Toast.LENGTH_SHORT);
         }
 
         @Override

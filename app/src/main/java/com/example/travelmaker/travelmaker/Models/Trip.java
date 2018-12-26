@@ -6,19 +6,19 @@ public class Trip {
     private String city;
     private String start_date;
     private String end_date;
-    private String cost;
+
     private String guide_name;
 
 
     private User guide;
 
-    public Trip(String country, String city, String start_date, String end_date, String cost, String guide_name) {
+    public Trip(String country, String city, String start_date, String end_date ) {
         this.country = country;
         this.city = city;
         this.start_date = start_date;
         this.end_date = end_date;
-        this.cost = cost;
-        this.guide_name = guide_name;
+
+        //this.guide_name = guide_name;
     }
 
     public String getCountry() {
@@ -53,13 +53,7 @@ public class Trip {
         this.end_date = end_date;
     }
 
-    public String getCost() {
-        return cost;
-    }
 
-    public void setCost(String cost) {
-        this.cost = cost;
-    }
 
     public String getGuide_name() {
         return guide_name;
@@ -84,7 +78,7 @@ public class Trip {
                 ", city='" + city + '\'' +
                 ", start_date='" + start_date + '\'' +
                 ", end_date='" + end_date + '\'' +
-                ", cost='" + cost + '\'' +
+
                 ", guide_name='" + guide_name + '\'' +
                 '}';
     }

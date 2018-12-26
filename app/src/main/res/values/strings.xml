@@ -11,6 +11,9 @@
     <string name="name">Name</string>
     <string name="your_trips">Your Trips</string>
     <string name="available_trips">Available Trips</string>
+
+    <string name="n_creat_trip">+  creat trip</string>
+
     <string-array name="signup_type">
         <item>Traveler</item>
         <item>Traveler Guide</item>

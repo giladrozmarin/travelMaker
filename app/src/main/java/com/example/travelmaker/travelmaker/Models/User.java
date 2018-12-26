@@ -1,8 +1,5 @@
 package com.example.travelmaker.travelmaker.Models;
 
-import java.util.Date;
-
-
 public class User {
 
 	public String userName,email,password,password2, type;
@@ -18,5 +15,28 @@ public class User {
 	//	this.birthDay = birthDay;
 	}
 
+    public String getuserName() {
+        return userName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setuserName(String userName) {
+        this.userName = userName;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
 }
