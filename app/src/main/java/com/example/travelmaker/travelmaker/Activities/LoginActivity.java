@@ -52,6 +52,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent registerActivity = new Intent(getApplicationContext(),RegisterActivity.class);
                 startActivity(registerActivity);
+                // TODO add startActivityForResult() - to get back login credentials after user signs up and login with it
 //                finish();;
             }
         });
