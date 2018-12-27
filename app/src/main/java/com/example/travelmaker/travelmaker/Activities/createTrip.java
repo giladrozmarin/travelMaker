@@ -55,7 +55,7 @@ public class createTrip extends AppCompatActivity {
                 Trip trip = new Trip(tripname,location1,start,end);
 
                 FirebaseDatabase.getInstance().getReference("Trips").child(tripname).setValue(trip);
-
+                finish();
             }
 
 
