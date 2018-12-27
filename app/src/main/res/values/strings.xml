@@ -18,4 +18,7 @@
         <item>Traveler</item>
         <item>Traveler Guide</item>
     </string-array>
+    <string name="title_activity_home_traveler">HomeTraveler</string>
+    <string name="aval_trips">Available Trips</string>
+    <string name="my_trips">My Trips</string>
 </resources>
