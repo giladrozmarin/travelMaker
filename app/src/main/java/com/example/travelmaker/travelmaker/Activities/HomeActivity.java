@@ -9,9 +9,11 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.travelmaker.travelmaker.R;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -22,46 +24,74 @@ import java.util.ArrayList;
 
 public class HomeActivity extends AppCompatActivity {
 
-   //Android layout
-    //private DatabaseReference tripDB= FirebaseDatabase.getInstance().getReference("Trips");
+    //Android layout
+    private TextView hello;
     private ListView listView ;
     private Button createTrip;
-
-
-
     //Firebase Var
     DatabaseReference databaseReference;
+    DatabaseReference databaseReferenceUser;
     FirebaseDatabase firebaseDatabase;
+    //Get curent user
+    FirebaseAuth mAuth = FirebaseAuth.getInstance();
+
     //ArrayList
     private ArrayList<String> arrayList = new  ArrayList<>();
     private ArrayAdapter<String>  adapter;
-
-
-
-
-
-
-    //FirebaseAuth mAuth = FirebaseAuth.getInstance();
-
-   // DatabaseReference db=FirebaseDatabase.getInstance().getReference();
-  //  DatabaseReference users = db.child("Users").child(mAuth.getCurrentUser().getUid()).child("userName") ;
-
-     //public String UID = user.getUid();
-
-
-        //child(user.type).child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(user);
-        // = db.child("Users").child(mAuth.getCurrentUser().getUid()).child("userName")
-    //final TextView ShowmyUser = (TextView) findViewById(R.id.usernameid);
+    //Strings
+    String helloUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home2);
 
+
+        //get my db
         firebaseDatabase = FirebaseDatabase.getInstance();
+        //trips foucs
         databaseReference = firebaseDatabase.getReference("Trips");
+        //user foucs
+        databaseReferenceUser = firebaseDatabase.getReference("Users").child("TravelGuide").child(mAuth.getCurrentUser().getUid())  ;
+
+
         listView = (ListView) findViewById(R.id.database_list_view);
 
+        //show hello user
+        databaseReferenceUser.addChildEventListener(new ChildEventListener() {
+
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+                helloUser = dataSnapshot.getValue(String.class);
+                hello.setText("hello "+helloUser);
+
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
+
+        //show trips
         databaseReference.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
@@ -91,19 +121,22 @@ public class HomeActivity extends AppCompatActivity {
 
             }
         });
+        //user hello
+        hello =findViewById(R.id.usernameid);
 
 
+        //creat trip btn
         createTrip = findViewById(R.id.createTrip);
         createTrip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent createTrip = new Intent(getApplicationContext(),createTrip.class);
                 startActivity(createTrip);
-//                finish();;
+                //finish();
             }
         });
 
-//
+
 
     }
 
