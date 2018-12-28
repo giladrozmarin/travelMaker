@@ -28,7 +28,7 @@ public class LoginActivity extends AppCompatActivity {
     private Button btnLogin;
     private ProgressBar loginProgress;
     private FirebaseAuth mAuth;
-    private Intent HomeActivity;
+    private Intent HomeActivity, HomeTraveler;
     private Button signUp;
 
 
@@ -42,7 +42,8 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin = findViewById(R.id.loginBtn);
         loginProgress = findViewById(R.id.login_progress);
         mAuth = FirebaseAuth.getInstance();
-        HomeActivity = new Intent(this,com.example.travelmaker.travelmaker.Activities.HomeActivity.class);
+        HomeTraveler = new Intent(this,com.example.travelmaker.travelmaker.Activities.HomeTraveler.class);
+//        HomeActivity = new Intent(this,com.example.travelmaker.travelmaker.Activities.HomeActivity.class);
         signUp = findViewById(R.id.sign_up);
         signUp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,10 +88,12 @@ public class LoginActivity extends AppCompatActivity {
 
 
                 if (task.isSuccessful()) {
-
-                    HomeActivity.setAction(Intent.ACTION_SEND);
-                    HomeActivity.setType("text/plain");
-                    HomeActivity.putExtra(Intent.EXTRA_TEXT, mail);
+                    HomeTraveler.setAction(Intent.ACTION_SEND);
+                    HomeTraveler.setType("text/plain");
+                    HomeTraveler.putExtra(Intent.EXTRA_TEXT, mail);
+//                    HomeActivity.setAction(Intent.ACTION_SEND);
+//                    HomeActivity.setType("text/plain");
+//                    HomeActivity.putExtra(Intent.EXTRA_TEXT, mail);
                     loginProgress.setVisibility(View.INVISIBLE);
                     btnLogin.setVisibility(View.VISIBLE);
                     updateUI();
@@ -112,7 +115,8 @@ public class LoginActivity extends AppCompatActivity {
 
     private void updateUI() {
 
-        startActivity(HomeActivity);
+//        startActivity(HomeActivity);
+        startActivity(HomeTraveler);
         finish();
 
     }
