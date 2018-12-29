@@ -126,29 +126,15 @@ public class HomeActivity extends AppCompatActivity {
 
     private void showData(DataSnapshot dataSnapshot) {
 
-
         for (DataSnapshot ds : dataSnapshot.getChildren()) {
 
-
             Trip tInfo = ds.getValue(Trip.class);
-
             if(UId.equals(tInfo.getGuide_name())) {
-
                 array.add(tInfo.getCountry());
-
             }
-            //
-                //array.add(tInfo.getEnd_date());
-                //array.add(tInfo.getGuide_name());
-                //array.add(tInfo.getStart_date());
-            //}
-
-
-
         }
 
     }
-
     private void showMassge(String message) {
         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
     }

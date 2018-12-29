@@ -9,21 +9,23 @@ android:background="#fff">
 
     <ImageView
         android:id="@+id/login_photo"
-        android:layout_width="90dp"
-        android:layout_height="90dp"
+        android:layout_width="199dp"
+        android:layout_height="187dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/userphoto" />
+        app:srcCompat="@drawable/travelmaker"
+        tools:srcCompat="@drawable/travelmaker" />
 
     <EditText
         android:id="@+id/login_mail"
         android:layout_width="265dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="6dp"
         android:layout_marginEnd="8dp"
         android:background="@drawable/reg_edittext_style"
         android:ems="10"
@@ -32,7 +34,8 @@ android:background="#fff">
         app:layout_constraintBottom_toTopOf="@+id/guideline3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.504"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sign_up" />
 
 <android.support.constraint.Guideline
     android:id="@+id/guideline3"
@@ -41,22 +44,21 @@ android:background="#fff">
     android:orientation="horizontal"
     app:layout_constraintGuide_percent="0.5" />
 
-<EditText
-    android:id="@+id/login_password"
-    android:layout_width="265dp"
-    android:layout_height="wrap_content"
-    android:layout_marginStart="8dp"
-    android:layout_marginLeft="8dp"
-    android:layout_marginTop="4dp"
-    android:layout_marginEnd="8dp"
-    android:layout_marginRight="8dp"
-    android:background="@drawable/reg_edittext_style"
-    android:ems="10"
-    android:hint="Password"
-    android:inputType="textPassword"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="@+id/guideline3" />
+    <EditText
+        android:id="@+id/login_password"
+        android:layout_width="265dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="64dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/reg_edittext_style"
+        android:ems="10"
+        android:hint="Password"
+        android:inputType="textPassword"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/login_mail" />
 
     <Button
         android:id="@+id/loginBtn"
@@ -101,7 +103,8 @@ android:background="#fff">
         app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/login_photo"
-        app:layout_constraintVertical_bias="0.239" />
+        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintVertical_chainStyle="spread_inside" />
 
 
 </android.support.constraint.ConstraintLayout>

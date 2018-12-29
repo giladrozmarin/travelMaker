@@ -1,16 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.travelmaker.travelmaker">
 
     <uses-permission android:name="android.permission.ACCESS_CHECKIN_PROPERTIES " />
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:icon="@drawable/travelmaker"
+        android:label="@string/travelmaker"
+        android:roundIcon="@drawable/travelmaker"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".Activities.WellcomActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
         <activity android:name=".Activities.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,14 +32,14 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
-                <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity android:name=".Activities.HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
-                <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity android:name=".Activities.createTrip">
@@ -39,18 +49,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".Activities.HomeTraveler"
-            android:label="@string/title_activity_home_traveler">
+        <activity android:name=".Activities.HomeTraveler">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-            <!--android:parentActivityName=".Activities.LoginActivity"-->
-            <!--android:theme="@style/AppTheme.NoActionBar">-->
-            <!--<meta-data-->
-                <!--android:name="android.support.PARENT_ACTIVITY"-->
-                <!--android:value="com.example.travelmaker.travelmaker.Activities.LoginActivity" />-->
         </activity>
+
     </application>
 
 </manifest>

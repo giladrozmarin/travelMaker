@@ -1,24 +1,26 @@
 package com.example.travelmaker.travelmaker.Activities;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
-import com.example.travelmaker.travelmaker.R;
 
+import com.example.travelmaker.travelmaker.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 
 public class LoginActivity extends AppCompatActivity {
@@ -43,7 +45,7 @@ public class LoginActivity extends AppCompatActivity {
         loginProgress = findViewById(R.id.login_progress);
         mAuth = FirebaseAuth.getInstance();
         HomeTraveler = new Intent(this,com.example.travelmaker.travelmaker.Activities.HomeTraveler.class);
-//        HomeActivity = new Intent(this,com.example.travelmaker.travelmaker.Activities.HomeActivity.class);
+        HomeActivity = new Intent(this,com.example.travelmaker.travelmaker.Activities.HomeActivity.class);
         signUp = findViewById(R.id.sign_up);
         signUp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,7 +65,6 @@ public class LoginActivity extends AppCompatActivity {
 
                 final String mail = userMail.getText().toString();
                 final String password = userPassword.getText().toString();
-                final DatabaseReference db = FirebaseDatabase.getInstance().getReference();
 
                 if (mail.isEmpty() || password.isEmpty()) {
                     showMessage("Please Verify All Field");
@@ -79,26 +80,58 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    private void signIn(final String mail, String password) {
+        private void signIn(final String mail, String password) {
 
 
-        mAuth.signInWithEmailAndPassword(mail,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
+            mAuth.signInWithEmailAndPassword(mail,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
 
 
-                if (task.isSuccessful()) {
-                    HomeTraveler.setAction(Intent.ACTION_SEND);
-                    HomeTraveler.setType("text/plain");
-                    HomeTraveler.putExtra(Intent.EXTRA_TEXT, mail);
-//                    HomeActivity.setAction(Intent.ACTION_SEND);
-//                    HomeActivity.setType("text/plain");
-//                    HomeActivity.putExtra(Intent.EXTRA_TEXT, mail);
-                    loginProgress.setVisibility(View.INVISIBLE);
-                    btnLogin.setVisibility(View.VISIBLE);
-                    updateUI();
+                    if (task.isSuccessful()) {
 
-                }
+
+                        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                        DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
+                        DatabaseReference uidRef = rootRef.child("Users").child("Traveler").child(uid);
+
+
+                        ValueEventListener valueEventListener = new ValueEventListener() {
+                            @Override
+                            public void onDataChange(com.google.firebase.database.DataSnapshot dataSnapshot) {
+                                if (dataSnapshot.exists()) {
+                                    //start students activity
+                                    HomeTraveler.setAction(Intent.ACTION_SEND);
+                                    HomeTraveler.setType("text/plain");
+                                    HomeTraveler.putExtra(Intent.EXTRA_TEXT, mail);
+                                    loginProgress.setVisibility(View.INVISIBLE);
+                                    btnLogin.setVisibility(View.VISIBLE);
+                                    showMessage("1");
+                                    startActivity(HomeTraveler);
+                                    finish();
+
+                                } else {
+                                    //start teachers activity
+                                    HomeActivity.setAction(Intent.ACTION_SEND);
+                                    HomeActivity.setType("text/plain");
+                                    HomeActivity.putExtra(Intent.EXTRA_TEXT, mail);
+                                    loginProgress.setVisibility(View.INVISIBLE);
+                                    btnLogin.setVisibility(View.VISIBLE);
+                                    showMessage("2");
+                                    startActivity(HomeActivity);;
+                                    finish();
+                                }
+                            }
+                            @Override
+                            public void onCancelled(DatabaseError databaseError)
+                            {
+                            }
+                        };
+                        uidRef.addListenerForSingleValueEvent(valueEventListener);
+
+
+
+                    }
                 else {
                     showMessage(task.getException().getMessage());
                     btnLogin.setVisibility(View.VISIBLE);
@@ -115,8 +148,8 @@ public class LoginActivity extends AppCompatActivity {
 
     private void updateUI() {
 
-//        startActivity(HomeActivity);
-        startActivity(HomeTraveler);
+        startActivity(HomeActivity);
+       // startActivity(HomeTraveler);
         finish();
 
     }
