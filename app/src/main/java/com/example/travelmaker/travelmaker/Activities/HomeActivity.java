@@ -53,6 +53,7 @@ public class HomeActivity extends AppCompatActivity {
         firebaseDatabase = FirebaseDatabase.getInstance();
         //trips foucs
         databaseReference = firebaseDatabase.getReference("Trips");
+
         //user foucs
         databaseReferenceUser = firebaseDatabase.getReference("Users").child("TravelGuide").child(mAuth.getCurrentUser().getUid());
         //
@@ -65,7 +66,7 @@ public class HomeActivity extends AppCompatActivity {
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
 
                 helloUser = dataSnapshot.getValue(String.class);
-                hello.setText("hello "+helloUser);
+                hello.setText(" Hello "+helloUser);
 
             }
 
@@ -90,6 +91,7 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
+        //show my trips
         databaseReference.addValueEventListener(new ValueEventListener() {
 
             @Override
@@ -128,7 +130,10 @@ public class HomeActivity extends AppCompatActivity {
 
         for (DataSnapshot ds : dataSnapshot.getChildren()) {
 
+
+
             Trip tInfo = ds.getValue(Trip.class);
+
             if(UId.equals(tInfo.getGuide_name())) {
                 array.add(tInfo.getCountry());
             }

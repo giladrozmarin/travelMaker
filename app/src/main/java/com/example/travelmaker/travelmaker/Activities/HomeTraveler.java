@@ -3,15 +3,11 @@ package com.example.travelmaker.travelmaker.Activities;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.travelmaker.travelmaker.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -22,85 +18,178 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class HomeTraveler extends AppCompatActivity {
 
-
+    //FireBase var
+      //Get my db
     FirebaseDatabase db;
     DatabaseReference db_ref;
+    DatabaseReference databaseReferenceUser;
+    DatabaseReference databaseReferenceId;
+       //Get curent user
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    String UId = mAuth.getCurrentUser().getUid();
 
+    //Android layout
+    private TextView hello;
+    private ListView listViewAvailableTrip;
+    private ListView listViewMyTrip;
+    //ArrayList
     private ArrayList<String> reg_trips = new ArrayList<>(), aval_trips = new ArrayList<>();
-    private ArrayAdapter<String> adapter;
-    private ListView listView;
-//    private RecyclerView reg_view, aval_view;
-//    private RecyclerView.Adapter mAdapter;
-//    private RecyclerView.LayoutManager mLayoutManager;
+    private ArrayAdapter<String> adapter,adapter1;
+    //Strings
+    String helloUser;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home_traveler);
-//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
+        protected void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.activity_home_traveler);
 
-        db = FirebaseDatabase.getInstance();
-        db_ref = db.getReference("Trips");
+            //get my db
+            db = FirebaseDatabase.getInstance();
+            //trip foucs
+            db_ref = db.getReference("Trips");
+            //user foucs
+            databaseReferenceUser = db.getReference("Users").child("Traveler").child(mAuth.getCurrentUser().getUid());
+            //trip user id
+            databaseReferenceId=  db.getInstance().getReference("travelers in tripid");
 
-        listView = (ListView) findViewById(R.id.available_trips);
 
-//        aval_view = (RecyclerView) findViewById(R.id.available_trips);
-//
-//        mLayoutManager = new LinearLayoutManager(this);
-//        aval_view.setLayoutManager(mLayoutManager);
+            //connect java to text view
+            hello = findViewById(R.id.usernameid3);
+            //show hello user
+            databaseReferenceUser.addChildEventListener(new ChildEventListener() {
+                @Override
+                public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                    helloUser = dataSnapshot.getValue(String.class);
+                    hello.setText("  Hello "+helloUser);
 
-//        mAdapter = new MA
-        db_ref.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                String value = dataSnapshot.getKey();
-                aval_trips.add(value);
-                adapter = new ArrayAdapter<String>(HomeTraveler.this,android.R.layout.simple_list_item_1,aval_trips);
-                listView.setAdapter(adapter);
+                }
+
+                @Override
+                public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+                }
+
+                @Override
+                public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+                }
+
+                @Override
+                public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+
+            //connect java to lists view
+            listViewMyTrip = (ListView) findViewById(R.id.my_trips);
+            listViewAvailableTrip = (ListView) findViewById(R.id.available_trips);
+            //trips available
+            db_ref.addChildEventListener(new ChildEventListener() {
+                @Override
+                public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+
+                    String value = dataSnapshot.getKey();
+                    aval_trips.add(value);
+
+
+
+                  //  available trips
+                    adapter1 = new ArrayAdapter<String>(HomeTraveler.this,android.R.layout.simple_list_item_1,aval_trips);
+                    listViewAvailableTrip.setAdapter(adapter1);
+
+                }
+                @Override
+                public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+                }
+
+                @Override
+                public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+                }
+
+                @Override
+                public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+            //trips reg
+            databaseReferenceId.addChildEventListener(new ChildEventListener() {
+                @Override
+                public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                    showData(dataSnapshot);
+                    //my trips
+                       adapter = new ArrayAdapter<String>(HomeTraveler.this,android.R.layout.simple_list_item_1,reg_trips);
+                       listViewMyTrip.setAdapter(adapter);
+                }
+
+                @Override
+                public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+                }
+
+                @Override
+                public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+                }
+
+                @Override
+                public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+
+        }
+
+    private void showData(DataSnapshot dataSnapshot) {
+
+
+
+        for (DataSnapshot ds : dataSnapshot.getChildren()) {
+
+
+
+
+            showMassge(ds.getValue().toString());
+
+
+
+            if(UId.equals( ds.getValue().toString()))
+            {
+
+                String trip = ds.getRef().getParent().toString();
+                String trip1 = trip.substring(trip.lastIndexOf('/'));
+                trip=trip1.substring(1, trip1.length());
+
+
+                reg_trips.add(trip);
+
             }
-//            @Override
-//            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-//                String value = dataSnapshot.getKey();
-//                aval_trips.add(value);
-//                mAdapter = new RecyclerView.Adapter<String.RecyclerView.>(HomeTraveler.this,android.R.layout.simple_list_item_1,aval_trips);
-//                aval_view.setAdapter(mAdapter);
-//            }
 
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+        }
 
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
-}
+    private void showMassge(String message) {
+        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+    }
+    }
+

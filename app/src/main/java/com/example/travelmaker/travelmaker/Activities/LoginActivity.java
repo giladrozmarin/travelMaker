@@ -106,7 +106,6 @@ public class LoginActivity extends AppCompatActivity {
                                     HomeTraveler.putExtra(Intent.EXTRA_TEXT, mail);
                                     loginProgress.setVisibility(View.INVISIBLE);
                                     btnLogin.setVisibility(View.VISIBLE);
-                                    showMessage("1");
                                     startActivity(HomeTraveler);
                                     finish();
 
@@ -117,7 +116,6 @@ public class LoginActivity extends AppCompatActivity {
                                     HomeActivity.putExtra(Intent.EXTRA_TEXT, mail);
                                     loginProgress.setVisibility(View.INVISIBLE);
                                     btnLogin.setVisibility(View.VISIBLE);
-                                    showMessage("2");
                                     startActivity(HomeActivity);;
                                     finish();
                                 }

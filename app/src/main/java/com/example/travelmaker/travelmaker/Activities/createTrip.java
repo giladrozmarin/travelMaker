@@ -55,16 +55,12 @@ public class createTrip extends AppCompatActivity {
                         final String start = startDay.getText().toString();
                         final String guide = mAuth.getCurrentUser().getUid();
                         final String end = endDay.getText().toString();
-                        final String travelers = "";
 
-                       // updateTravelers(tripname,location1,start,guide,end,travelers) ;
 
-                        //get the guide
-
-                        // after we created trip we need to update
-                        Trip trip = new Trip(tripname, location1, start,end,guide,travelers);
+                        Trip trip = new Trip(tripname, location1, start,end,guide);
 
                         FirebaseDatabase.getInstance().getReference("Trips").child(tripname).setValue(trip);
+                        FirebaseDatabase.getInstance().getReference("travelers in tripid").child(tripname).setValue("");
 
                         showMassge("Trip creat successfully");
                         updateUI();
