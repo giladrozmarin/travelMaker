@@ -12,7 +12,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.travelmaker.travelmaker.Models.Trip;
 import com.example.travelmaker.travelmaker.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
@@ -130,12 +129,14 @@ public class HomeActivity extends AppCompatActivity {
 
         for (DataSnapshot ds : dataSnapshot.getChildren()) {
 
+            String guideID1 = ds.getKey();
+
+            String[] arrSt = guideID1.split(" ");
+            String guideID = guideID1.substring(arrSt[0].length()+1, guideID1.length());
 
 
-            Trip tInfo = ds.getValue(Trip.class);
-
-            if(UId.equals(tInfo.getGuide_name())) {
-                array.add(tInfo.getCountry());
+            if(UId.equals(arrSt[0])) {
+                array.add(guideID);
             }
         }
 

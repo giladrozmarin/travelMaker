@@ -29,6 +29,7 @@ public class createTrip extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_create_trip);
        //var = id layout
         tripName = findViewById(R.id.tripName);
@@ -57,10 +58,10 @@ public class createTrip extends AppCompatActivity {
                         final String end = endDay.getText().toString();
 
 
-                        Trip trip = new Trip(tripname, location1, start,end,guide);
+                        Trip trip = new Trip(tripname, location1, start,end);
 
-                        FirebaseDatabase.getInstance().getReference("Trips").child(tripname).setValue(trip);
-                        FirebaseDatabase.getInstance().getReference("travelers in tripid").child(tripname).setValue("");
+                        FirebaseDatabase.getInstance().getReference("Trips").child(guide+" "+tripname).child(tripname).setValue(trip);
+                        FirebaseDatabase.getInstance().getReference("travelers in tripid").child(guide+" "+tripname).child(tripname).child("travelerid").setValue("");
 
                         showMassge("Trip creat successfully");
                         updateUI();

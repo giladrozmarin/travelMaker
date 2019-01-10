@@ -1,9 +1,12 @@
 package com.example.travelmaker.travelmaker.Activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -53,10 +56,9 @@ public class HomeTraveler extends AppCompatActivity {
             databaseReferenceUser = db.getReference("Users").child("Traveler").child(mAuth.getCurrentUser().getUid());
             //trip user id
             databaseReferenceId=  db.getInstance().getReference("travelers in tripid");
-
-
             //connect java to text view
             hello = findViewById(R.id.usernameid3);
+
             //show hello user
             databaseReferenceUser.addChildEventListener(new ChildEventListener() {
                 @Override
@@ -90,42 +92,9 @@ public class HomeTraveler extends AppCompatActivity {
             //connect java to lists view
             listViewMyTrip = (ListView) findViewById(R.id.my_trips);
             listViewAvailableTrip = (ListView) findViewById(R.id.available_trips);
-            //trips available
-            db_ref.addChildEventListener(new ChildEventListener() {
-                @Override
-                public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-
-                    String value = dataSnapshot.getKey();
-                    aval_trips.add(value);
 
 
 
-                  //  available trips
-                    adapter1 = new ArrayAdapter<String>(HomeTraveler.this,android.R.layout.simple_list_item_1,aval_trips);
-                    listViewAvailableTrip.setAdapter(adapter1);
-
-                }
-                @Override
-                public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-                }
-
-                @Override
-                public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-
-                }
-
-                @Override
-                public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                }
-            });
             //trips reg
             databaseReferenceId.addChildEventListener(new ChildEventListener() {
                 @Override
@@ -156,6 +125,64 @@ public class HomeTraveler extends AppCompatActivity {
 
                 }
             });
+            //trips available
+            db_ref.addChildEventListener(new ChildEventListener() {
+                @Override
+                public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+
+                    String value = dataSnapshot.getKey();
+
+
+                    String[] arrSt = value.split(" ");
+                    String trip = value.substring(arrSt[0].length() + 1, value.length());
+
+
+
+                    aval_trips.add(trip);
+
+
+
+                    //  available trips
+                    aval_trips.removeAll(reg_trips);
+
+
+                    adapter1 = new ArrayAdapter<String>(HomeTraveler.this,android.R.layout.simple_list_item_1,aval_trips);
+                    listViewAvailableTrip.setAdapter(adapter1);
+
+                }
+                @Override
+                public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+                }
+
+                @Override
+                public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+                }
+
+                @Override
+                public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+
+
+            listViewAvailableTrip.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                    Intent regTrip = new Intent(getApplicationContext(), regTrip.class);
+                    regTrip.putExtra("Trip",adapter1.getItem(i));
+                    startActivity(regTrip);
+                }
+            });
+
 
         }
 
@@ -168,21 +195,21 @@ public class HomeTraveler extends AppCompatActivity {
 
 
 
-            showMassge(ds.getValue().toString());
-
-
-
-            if(UId.equals( ds.getValue().toString()))
+            if(ds.hasChild(UId))
             {
-
                 String trip = ds.getRef().getParent().toString();
                 String trip1 = trip.substring(trip.lastIndexOf('/'));
-                trip=trip1.substring(1, trip1.length());
+                trip1 =trip1.replace("%20"," ");
+                String[] arrSt = trip1.split(" ");
+                String trip_name = trip1.substring(arrSt[0].length()+1, trip1.length());
 
 
-                reg_trips.add(trip);
+
+                reg_trips.add(trip_name);
 
             }
+
+
 
         }
 

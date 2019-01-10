@@ -2,40 +2,40 @@ package com.example.travelmaker.travelmaker.Models;
 
 public class Trip {
 
-    private String country;
-    private String city;
+    private String trip_name;
+    private String location;
     private String start_date;
-    private String guide_name;
+   // private String guide_name;
     private String end_date;
     //private String travelers;
     private User guide;
 
-    public Trip(String country, String city, String start_date,String end_date,String guide_name) {
-        this.country = country;
-        this.city = city;
+    public Trip(String trip_name, String location, String start_date,String end_date) {
+        this.trip_name = trip_name;
+        this.location = location;
         this.start_date = start_date;
         this.end_date = end_date;
-        this.guide_name = guide_name;
+        //this.guide_name = guide_name;
      //   this.travelers=travelers;
 
     }
    public Trip (){}
 
 
-    public String getCountry() {
-        return country;
+    public String getTrip_name() {
+        return trip_name;
     }
 
-    public void setCountry(String country) {
-        this.country = country;
+    public void setTrip_name(String trip_name) {
+        this.trip_name = trip_name;
     }
 
-    public String getCity() {
-        return city;
+    public String getLocation() {
+        return location;
     }
 
-    public void setCity(String city) {
-        this.city = city;
+    public void setLocation(String location) {
+        this.location = location;
     }
 
     public String getStart_date() {
@@ -56,13 +56,7 @@ public class Trip {
 
 
 
-    public String getGuide_name() {
-        return guide_name;
-    }
 
-    public void setGuide_name(String guide_name) {
-        this.guide_name = guide_name;
-    }
 
     public User getGuide() {
         return guide;
@@ -75,11 +69,11 @@ public class Trip {
     @Override
     public String toString() {
         return "Trip{" +
-                "country='" + country + '\'' +
-                ", city='" + city + '\'' +
+                "country='" + trip_name + '\'' +
+                ", city='" + location + '\'' +
                 ", start_date='" + start_date + '\'' +
                 ", end_date='" + end_date + '\'' +
-                ", guide_name='" + guide_name + '\'' +
+               // ", guide_name='" + guide_name + '\'' +
                // ", travelers='" + travelers + '\'' +
                 '}';
     }
