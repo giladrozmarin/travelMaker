@@ -12,7 +12,6 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
-
 import com.example.travelmaker.travelmaker.Models.User;
 import com.example.travelmaker.travelmaker.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -22,14 +21,13 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.FirebaseDatabase;
-
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class RegisterActivity extends AppCompatActivity {
 
-//na
+
     private EditText userName, userEmail, userPassword, userPassword2;
     private ProgressBar loadingProgress;
     private Button regBtn;
@@ -171,7 +169,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void updateUI(){
 
-        Intent homeActivity = new Intent(getApplicationContext(), HomeActivity.class);
+        Intent homeActivity = new Intent(getApplicationContext(), LoginActivity.class);
         startActivity(homeActivity);
         finish();
     }

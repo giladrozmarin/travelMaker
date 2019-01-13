@@ -47,6 +47,8 @@ public class LoginActivity extends AppCompatActivity {
         HomeTraveler = new Intent(this,com.example.travelmaker.travelmaker.Activities.HomeTraveler.class);
         HomeActivity = new Intent(this,com.example.travelmaker.travelmaker.Activities.HomeActivity.class);
         signUp = findViewById(R.id.sign_up);
+
+        //sign up
         signUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -56,10 +58,14 @@ public class LoginActivity extends AppCompatActivity {
 //                finish();;
             }
         });
+
         loginProgress.setVisibility(View.INVISIBLE);
+        //login
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+
                 loginProgress.setVisibility(View.VISIBLE);
                 btnLogin.setVisibility(View.INVISIBLE);
 
@@ -76,9 +82,13 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
+
+
         //DB read test
 
     }
+
+    //chose activity
 
         private void signIn(final String mail, String password) {
 
@@ -145,20 +155,13 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    private void updateUI() {
-
-        startActivity(HomeActivity);
-       // startActivity(HomeTraveler);
-        finish();
-
-    }
 
     private void showMessage(String text) {
 
         Toast.makeText(getApplicationContext(),text,Toast.LENGTH_LONG).show();
     }
 
-
+    /** Check if user is already connect */
     @Override
     protected void onStart() {
         super.onStart();

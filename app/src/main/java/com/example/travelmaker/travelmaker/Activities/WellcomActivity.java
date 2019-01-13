@@ -13,6 +13,8 @@ public class WellcomActivity extends AppCompatActivity {
 
     Timer timer;
 
+
+    // Welcome Activity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
