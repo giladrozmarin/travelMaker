@@ -13,23 +13,18 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-
-        <activity android:name=".Activities.regTrip" >
+        <activity android:name=".Activities.regTrip">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <!--category android:name="android.intent.category.LAUNCHER" /-->
-
+                <action android:name="android.intent.action.regTtip" />
+                <!-- category android:name="android.intent.category.LAUNCHER" / -->
 
             </intent-filter>
         </activity>
-
-
         <activity android:name=".Activities.WellcomActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
-
-
             </intent-filter>
         </activity>
         <activity android:name=".Activities.LoginActivity">
@@ -53,16 +48,13 @@
                 <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
             </intent-filter>
         </activity>
-
         <activity android:name=".Activities.HomeTraveler">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
-
                 <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
             </intent-filter>
         </activity>
-
         <activity android:name=".Activities.createTrip">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -70,8 +62,7 @@
                 <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
             </intent-filter>
         </activity>
-
-
+        <activity android:name=".Activities.tripInfo"></activity>
     </application>
 
 </manifest>

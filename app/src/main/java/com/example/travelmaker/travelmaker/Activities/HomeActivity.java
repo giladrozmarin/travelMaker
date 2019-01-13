@@ -29,6 +29,7 @@ public class HomeActivity extends AppCompatActivity {
     private TextView hello;
     private ListView listView;
     private Button createTrip;
+    private Button logoutbt;
     //Firebase Var
     DatabaseReference databaseReference;
     DatabaseReference databaseReferenceUser;
@@ -108,8 +109,17 @@ public class HomeActivity extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
-        });
 
+        });
+        logoutbt = findViewById(R.id.logoutbt2);
+
+        logoutbt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                updateUI();
+
+            }
+        });
         //user hello
         hello = findViewById(R.id.usernameid);
 
@@ -143,5 +153,11 @@ public class HomeActivity extends AppCompatActivity {
     }
     private void showMassge(String message) {
         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+    }
+    private void updateUI() {
+        FirebaseAuth.getInstance().signOut();
+        Intent LoginActivity = new Intent(getApplicationContext(), LoginActivity.class);
+        startActivity(LoginActivity);
+        finish();
     }
 }

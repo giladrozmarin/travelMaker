@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,6 +39,7 @@ public class HomeTraveler extends AppCompatActivity {
     private TextView hello;
     private ListView listViewAvailableTrip;
     private ListView listViewMyTrip;
+    private Button logoutbt;
     //ArrayList
     private ArrayList<String> reg_trips = new ArrayList<>(), aval_trips = new ArrayList<>();
     private ArrayAdapter<String> adapter,adapter1;
@@ -182,6 +184,15 @@ public class HomeTraveler extends AppCompatActivity {
                     startActivity(regTrip);
                 }
             });
+            logoutbt = findViewById(R.id.logoutbt);
+
+            logoutbt.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    updateUI();
+
+                }
+            });
 
 
         }
@@ -217,6 +228,12 @@ public class HomeTraveler extends AppCompatActivity {
 
     private void showMassge(String message) {
         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+    }
+    private void updateUI() {
+        FirebaseAuth.getInstance().signOut();
+        Intent LoginActivity = new Intent(getApplicationContext(), LoginActivity.class);
+        startActivity(LoginActivity);
+        finish();
     }
     }
 

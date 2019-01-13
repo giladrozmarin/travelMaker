@@ -100,7 +100,7 @@ public class LoginActivity extends AppCompatActivity {
                             @Override
                             public void onDataChange(com.google.firebase.database.DataSnapshot dataSnapshot) {
                                 if (dataSnapshot.exists()) {
-                                    //start students activity
+                                    //start traveler activity
                                     HomeTraveler.setAction(Intent.ACTION_SEND);
                                     HomeTraveler.setType("text/plain");
                                     HomeTraveler.putExtra(Intent.EXTRA_TEXT, mail);
@@ -110,7 +110,7 @@ public class LoginActivity extends AppCompatActivity {
                                     finish();
 
                                 } else {
-                                    //start teachers activity
+                                    //start travel guide activity
                                     HomeActivity.setAction(Intent.ACTION_SEND);
                                     HomeActivity.setType("text/plain");
                                     HomeActivity.putExtra(Intent.EXTRA_TEXT, mail);
@@ -126,6 +126,7 @@ public class LoginActivity extends AppCompatActivity {
                             }
                         };
                         uidRef.addListenerForSingleValueEvent(valueEventListener);
+
 
 
 
@@ -164,8 +165,32 @@ public class LoginActivity extends AppCompatActivity {
         FirebaseUser user = mAuth.getCurrentUser();
 
         if(user != null) {
-            //user is already connected  so we need to redirect him to home page
-            updateUI();
+            String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+            DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
+            DatabaseReference uidRef = rootRef.child("Users").child("Traveler").child(uid);
+
+            ValueEventListener valueEventListener = new ValueEventListener() {
+                @Override
+                public void onDataChange(com.google.firebase.database.DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.exists()) {
+
+                        startActivity(HomeTraveler);
+                        finish();
+
+                    } else {
+
+                        startActivity(HomeActivity);;
+                        finish();
+                    }
+                }
+                @Override
+                public void onCancelled(DatabaseError databaseError)
+                {
+                }
+            };
+            uidRef.addListenerForSingleValueEvent(valueEventListener);
+
+
 
         }
 
